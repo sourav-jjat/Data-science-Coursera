@@ -5,11 +5,9 @@ rankall <- function(diaganosis = character(), num){
   ## replace white space and not available as NA
   outcome <- read.csv("outcome-of-care-measures.csv",stringsAsFactors = FALSE, na.strings = c("Not Available","") )
   
-  ##check if state is correct
+
   states <- unique(outcome$State)
-  if (s%in%states == FALSE) {
-    stop("invalid state")
-  }
+
   
   ##check if conditions match
   conditions <-c("heart attack","heart failure","pneumonia")
@@ -25,20 +23,15 @@ rankall <- function(diaganosis = character(), num){
   names(df)[4] <- "heart failure"
   names(df)[5] <- "pneumonia"
   
-  
-  
-  ##subsetting data by column names for better understanding/visualizing
-  #df <- df[,c("Hospital.Name", "State", diagnosis)]
-  
   #sorting by diagnosis and then sorting by hospital name
   df <- df[order(df[,colnames(df) == diagnosis],df$Hospital.Name),]
   
   #create an empty vector for adding hospital names
   hospital_name_num <-c()
   
-  
   #splitting as per states
   best_state <- split.data.frame(df, df$State)
+  
   for (variable in states) {
     #dummy variable to store a state information in one
     best_in_state <- best_state[[variable]]
@@ -48,7 +41,7 @@ rankall <- function(diaganosis = character(), num){
     if (num > nrow(best_state)) {
       append(hospital_name_num,NA)
     }
-    if (is.na(best_in_state$Hospital.Name[num]) == TRUE) {
+    if (is.na(best_in_state$diagnosis[num]) == TRUE) {
       append(hospital_name_num, NA)
     }
     if (num == "best") {
@@ -59,25 +52,6 @@ rankall <- function(diaganosis = character(), num){
       append(hospital_name_num, best_state$Hospital.Name[num])
     }
     
-    ranks <- data.frame(Hospital = hhospital_name_num, State = states)
-    
   }
-  
-  
-  #best_state <- best_state[[s]]
-  
-  
-
-  
-  
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  ranks <- data.frame(Hospital = hhospital_name_num, State = states)
 }
