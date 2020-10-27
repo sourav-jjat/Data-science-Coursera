@@ -36,9 +36,18 @@ rankhospital <- function(s= character(), diagnosis = character(), num){
   best_state <- best_state[[st]]
   best_state <- best_state[complete.cases(best_state),]
   
+  if (num > nrow(best_state)) {
+    NA
+    
+  }
+  
+  
   if (num == "best") {
-    num <- 1
     best_state$Hospital.Name[1]
+  }else if (num == "worst") {
+    best_state$Hospital.Name[nrow(best_state)]
+  } else {
+    best_state$Hospital.Name[num]
   }
   
   
