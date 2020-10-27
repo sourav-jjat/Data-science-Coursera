@@ -25,30 +25,46 @@ rankall <- function(diaganosis = character(), num){
   names(df)[4] <- "heart failure"
   names(df)[5] <- "pneumonia"
   
+  
+  
   ##subsetting data by column names for better understanding/visualizing
   #df <- df[,c("Hospital.Name", "State", diagnosis)]
   
   #sorting by diagnosis and then sorting by hospital name
   df <- df[order(df[,colnames(df) == diagnosis],df$Hospital.Name),]
   
+  #create an empty vector for adding hospital names
+  hospital_name_num <-c()
+  
+  
   #splitting as per states
   best_state <- split.data.frame(df, df$State)
-  best_state <- best_state[[s]]
-  #best_state <- best_state[complete.cases(best_state),]
-  
-  if (num > nrow(best_state)) {
-    NA
+  for (variable in states) {
+    #dummy variable to store a state information in one
+    best_in_state <- best_state[[variable]]
+    if (num > nrow(best_state)) {
+      append(hospital_name_num,NA)
+    }
+    if (num == "best") {
+      append(hospital_name_num,best_in_state$Hospital.Name[1])
+    }else if (num == "worst") {
+      append(hospital_name_num, best_state$Hospital.Name[nrow(best_state) - sum(is.na(best_state[,colnames(best_state) == diagnosis]))])
+    } else {
+      append(hospital_name_num, best_state$Hospital.Name[num])
+    }
+    
+    ranks <- data.frame(Hospital = hhospital_name_num, State = states)
     
   }
   
   
-  if (num == "best") {
-    best_state$Hospital.Name[1]
-  }else if (num == "worst") {
-    best_state$Hospital.Name[nrow(best_state) - sum(is.na(best_state[,colnames(best_state) == diagnosis]))]
-  } else {
-    best_state$Hospital.Name[num]
-  }
+  #best_state <- best_state[[s]]
+  
+  
+
+  
+  
+
   
   
   
