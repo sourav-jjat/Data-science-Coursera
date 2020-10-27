@@ -42,8 +42,14 @@ rankall <- function(diaganosis = character(), num){
   for (variable in states) {
     #dummy variable to store a state information in one
     best_in_state <- best_state[[variable]]
+    
+    ##checking if the rank exceeds number of hospitals in state
+    
     if (num > nrow(best_state)) {
       append(hospital_name_num,NA)
+    }
+    if (is.na(best_in_state$Hospital.Name[num]) == TRUE) {
+      append(hospital_name_num, NA)
     }
     if (num == "best") {
       append(hospital_name_num,best_in_state$Hospital.Name[1])
