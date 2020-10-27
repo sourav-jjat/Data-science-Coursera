@@ -26,13 +26,13 @@ best <- function(st = character(), diagnosis = character()){
   names(df)[4] <- "heart failure"
   names(df)[5] <- "pneumonia"
   
-  #sorting by diagnosis
-  df <- df[order(df[,"Hospital.Name"]),]
+  #sorting by diagnosis and then sorting by hospital name
+  df <- df[order(df[,colnames(df) == diagnosis],df$Hospital.Name),]
   
   #splitting as per states
   best_state <- split.data.frame(df, df$State)
   best_state <- best_state[[st]]
-  best_state[order(colnames(best_state) == diagnosis),]$Hospital.Name[1]
+  best_state$Hospital.Name[1]
 
   
   
