@@ -7,7 +7,7 @@ rankhospital <- function(s= character(), diagnosis = character(), num){
   
   ##check if state is correct
   states <- unique(outcome$State)
-  if (st%in%states == FALSE) {
+  if (s%in%states == FALSE) {
     stop("invalid state")
   }
   
@@ -33,7 +33,7 @@ rankhospital <- function(s= character(), diagnosis = character(), num){
   
   #splitting as per states
   best_state <- split.data.frame(df, df$State)
-  best_state <- best_state[[st]]
+  best_state <- best_state[[s]]
   #best_state <- best_state[complete.cases(best_state),]
   
   if (num > nrow(best_state)) {
