@@ -26,7 +26,7 @@ rankhospital <- function(s= character(), diagnosis = character(), num){
   names(df)[5] <- "pneumonia"
   
   ##subsetting data by column names for better understanding/visualizing
-  df <- df[,c("Hospital.Name", "State", diagnosis)]
+  #df <- df[,c("Hospital.Name", "State", diagnosis)]
   
   #sorting by diagnosis and then sorting by hospital name
   df <- df[order(df[,colnames(df) == diagnosis],df$Hospital.Name),]
@@ -34,7 +34,7 @@ rankhospital <- function(s= character(), diagnosis = character(), num){
   #splitting as per states
   best_state <- split.data.frame(df, df$State)
   best_state <- best_state[[st]]
-  best_state <- best_state[complete.cases(best_state),]
+  #best_state <- best_state[complete.cases(best_state),]
   
   if (num > nrow(best_state)) {
     NA
@@ -45,7 +45,7 @@ rankhospital <- function(s= character(), diagnosis = character(), num){
   if (num == "best") {
     best_state$Hospital.Name[1]
   }else if (num == "worst") {
-    best_state$Hospital.Name[nrow(best_state)]
+    best_state$Hospital.Name[nrow(best_state) - sum(is.na(best_state[,colnames(best_state) == diagnosis]))]
   } else {
     best_state$Hospital.Name[num]
   }
