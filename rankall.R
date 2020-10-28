@@ -1,4 +1,4 @@
-rankall <- function(diaganosis = character(), num){
+rankall <- function(diagnosis = character(), num){
   setwd("C:/Users/soura/Documents/Data_Science_Spec_Coursera/Data-science-Coursera/Week 4")
   
   ##load the csv file and do not set them as categorical vectors and
@@ -62,4 +62,5 @@ rankall <- function(diaganosis = character(), num){
     #variable <- NULL
   }
   ranks <- data.frame(Hospital = hospital_name_num, State = states)
+  ranks <- ranks[order(ranks$states),]
 }
