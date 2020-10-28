@@ -1,9 +1,9 @@
 rankall <- function(diagnosis = character(), num){
-  setwd("C:/Users/soura/Documents/Data_Science_Spec_Coursera/Data-science-Coursera/Week 4")
+  # setwd("C:/Users/soura/Documents/Data_Science_Spec_Coursera/Data-science-Coursera/Week 4")
   
   ##load the csv file and do not set them as categorical vectors and
   ## replace white space and not available as NA
-  outcome <- read.csv("outcome-of-care-measures.csv",stringsAsFactors = FALSE, na.strings = c("Not Available","") )
+  outcome <- read.csv(file.path("C:/Users/soura/Documents/Data_Science_Spec_Coursera/Data-science-Coursera/Week 4/outcome-of-care-measures.csv"),stringsAsFactors = FALSE, na.strings = c("Not Available","") )
   
 
   states <- unique(outcome$State)
