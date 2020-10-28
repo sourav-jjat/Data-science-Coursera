@@ -7,6 +7,7 @@ rankall <- function(diagnosis = character(), num){
   
 
   states <- unique(outcome$State)
+  states <- states[order(states)]
 
   
   ##check if conditions match
@@ -48,19 +49,28 @@ rankall <- function(diagnosis = character(), num){
     best_in_state_complete <- best_in_state[complete.cases(best_in_state),]
     ##checking if the rank exceeds number of hospitals in state
     
-    if (num > nrow(best_in_state)) {
-      hospital_name_num <- append(hospital_name_num,as.character(NA))
-    }else if (num == "best") {
-      hospital_name_num <- append(hospital_name_num,best_in_state_complete$Hospital.Name[1])
-    }else if (num == "worst") {
     
-      hospital_name_num <- append(hospital_name_num, best_in_state_completes$Hospital.Name[nrow(best_in_state_complete)])
+    if (num == "best") {
+      num1 <- 1
+      
+    }else if (num == "worst"){
+      num1 <- nrow(best_in_state_complete)
+    }else { num1 <- num}
+    
+    
+    
+    if (num1 > nrow(best_in_state_complete)) {
+      hospital_name_num <- append(hospital_name_num,as.character(NA))
+    # }else if (num == "best") {
+    #   hospital_name_num <- append(hospital_name_num,best_in_state_complete$Hospital.Name[1])
+    # }else if (num == "worst") {
+    #   hospital_name_num <- append(hospital_name_num, best_in_state_completes$Hospital.Name[nrow(best_in_state_complete)])
     } else {
       
-      hospital_name_num <- append(hospital_name_num, best_in_state_complete$Hospital.Name[num])
+      hospital_name_num <- append(hospital_name_num, best_in_state_complete$Hospital.Name[num1])
     }
     #variable <- NULL
   }
   ranks <- data.frame(Hospital = hospital_name_num, State = states)
-  ranks <- ranks[order(ranks$states),]
+  
 }
