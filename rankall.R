@@ -38,20 +38,20 @@ rankall <- function(diaganosis = character(), num){
     
     ##checking if the rank exceeds number of hospitals in state
     
-    if (num > nrow(best_state)) {
-      append(hospital_name_num,NA)
+    if (num > nrow(best_in_state)) {
+      hospital_name_num <- append(hospital_name_num,NA)
     }
-    if (is.na(best_in_state$diagnosis[num]) == TRUE) {
-      append(hospital_name_num, NA)
+    if (is.null(best_in_state$diagnosis[num]) == TRUE) {
+      hospital_name_num <- append(hospital_name_num, NA)
     }
     if (num == "best") {
-      append(hospital_name_num,best_in_state$Hospital.Name[1])
+      hospital_name_num <- append(hospital_name_num,best_in_state$Hospital.Name[1])
     }else if (num == "worst") {
-      append(hospital_name_num, best_state$Hospital.Name[nrow(best_state) - sum(is.na(best_state[,colnames(best_state) == diagnosis]))])
+      hospital_name_num <- append(hospital_name_num, best_state$Hospital.Name[nrow(best_state) - sum(is.na(best_state[,colnames(best_state) == diagnosis]))])
     } else {
-      append(hospital_name_num, best_state$Hospital.Name[num])
+      hospital_name_num <- append(hospital_name_num, best_state$Hospital.Name[num])
     }
     
   }
-  ranks <- data.frame(Hospital = hhospital_name_num, State = states)
+  ranks <- data.frame(Hospital = hospital_name_num, State = states)
 }
